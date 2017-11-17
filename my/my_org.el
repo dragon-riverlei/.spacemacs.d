@@ -1,10 +1,11 @@
 (setq org-agenda-files
   (quote
-    ("/BaiduYun/org/edu.org"
-      "/BaiduYun/org/gtd.org"
-      "/BaiduYun/org/journal.org"
-      "/BaiduYun/org/investment_journey.org"
-      "/BaiduYun/org/learning.org")))
+    ("~/Documents/org/edu.org"
+     "~/Documents/org/gtd.org"
+     "~/Documents/org/gtd_20170503_archive.org"
+     "~/Documents/org/journal.org"
+     "~/Documents/org/investment_journey.org"
+     "~/Documents/org/learning.org")))
 
 (defvar my/org-task-tpl "* TODO %^{Task}
 :PROPERTIES:
@@ -28,17 +29,17 @@ Captured %<%Y-%m-%d %H:%M>
 (setq org-capture-templates
   `(
      ("t" "Task" entry
-      (file+headline "gtd.org" "TASKS")
+      (file+headline "~/Documents/org/gtd.org" "TASKS")
       ,my/org-task-tpl)
      ("p" "Project" entry
-       (file+headline "gtd.org" "PROJECTS")
+      (file+headline "~/Documents/org/gtd.org" "PROJECTS")
        ,my/org-project-tpl)
      ("j" "Journal entry" entry
-       (file+datetree "journal.org")
+      (file+datetree "~/Documents/org/journal.org")
        "* %^{Topic}\n%?\n"
        :unnarrowed t)
      ("q" "Quick note" item
-       (file+headline "note.org" "Quick note"))))
+      (file+headline "~/Documents/org/note.org" "Quick note"))))
 
 (setq org-todo-keywords
   '(
@@ -50,5 +51,50 @@ Captured %<%Y-%m-%d %H:%M>
   '(
      (nil :maxlevel . 4)                ;;all top 4 level headlines in the current buffer
      (org-agenda-files :maxlevel . 4))) ;;all top 4 level headlines in agenda files
+
+(defun org-renumber-environment (orig-func &rest args)
+  (let ((results '())
+  (counter -1)
+  (numberp))
+
+    (setq results (loop for (begin .  env) in
+      (org-element-map (org-element-parse-buffer) 'latex-environment
+        (lambda (env)
+          (cons
+          (org-element-property :begin env)
+          (org-element-property :value env))))
+      collect
+      (cond
+      ((and (string-match "\\\\begin{equation}" env)
+            (not (string-match "\\\\tag{" env)))
+        (incf counter)
+        (cons begin counter))
+      ((string-match "\\\\begin{align}" env)
+        (prog2
+            (incf counter)
+            (cons begin counter)
+          (with-temp-buffer
+            (insert env)
+            (goto-char (point-min))
+            ;; \\ is used for a new line. Each one leads to a number
+            (incf counter (count-matches "\\\\$"))
+            ;; unless there are nonumbers.
+            (goto-char (point-min))
+            (decf counter (count-matches "\\nonumber")))))
+      (t
+        (cons begin nil)))))
+
+    (when (setq numberp (cdr (assoc (point) results)))
+      (setf (car args)
+      (concat
+      (format "\\setcounter{equation}{%s}\n" numberp)
+      (car args)))))
+  (apply orig-func args))
+
+(add-hook 'org-load-hook
+  (lambda ()
+    (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+    (setq org-format-latex-options (plist-put org-format-latex-options :foreground "SpringGreen1"))
+    (advice-add 'org-create-formula-image :around #'org-renumber-environment)))
 
 (provide 'my_org)

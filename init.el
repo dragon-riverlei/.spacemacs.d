@@ -31,7 +31,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     windows-scripts
+     ruby
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -47,9 +48,11 @@ values."
      html
      ipython-notebook
      javascript
-     ;; markdown
+     latex
+     markdown
      org
      python
+     shell
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -57,6 +60,7 @@ values."
      sql
      syntax-checking
      ;; version-control
+     windows-scripts
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -64,7 +68,12 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
+     bash-completion
+     groovy-mode
+     indent-tools
      key-chord
+     org-ref
+     ztree
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -304,6 +313,11 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq configuration-layer--elpa-archives
+        '(("melpa-cn" . "https://elpa.emacs-china.org/melpa/")
+          ("org-cn"   . "https://elpa.emacs-china.org/org/")
+          ("gnu-cn"   . "https://elpa.emacs-china.org/gnu/")
+          ))
   )
 
 (defun dotspacemacs/user-config ()
@@ -315,7 +329,7 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (add-to-load-path "~/.spacemacs.d/my")
   (require 'my)
-  )
+)
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -326,7 +340,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (powershell slime-company slime common-lisp-snippets typit mmt pacmacs 2048-game sql-indent ein websocket yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode cython-mode company-anaconda anaconda-mode pythonic etags-select company-web web-completion-data company-tern dash-functional company-statistics company auto-yasnippet ac-ispell auto-complete web-mode web-beautify tern tagedit slim-mode scss-mode sass-mode pug-mode org-projectile org-present org org-pomodoro alert log4e gntp org-download mwim livid-mode skewer-mode simple-httpd less-css-mode key-chord json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc htmlize haml-mode gnuplot flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck evil-unimpaired ws-butler window-numbering which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-make helm helm-core google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump popup f s diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash async aggressive-indent adaptive-wrap ace-window ace-link avy quelpa package-build spacemacs-theme))))
+    (org2ctex org-ref pdf-tools helm-bibtex biblio parsebib biblio-core tablist winum unfill sudoku org-category-capture fuzzy emmet-mode request-deferred deferred auto-dictionary coffee-mode company-auctex auctex bash-completion xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help pangu-spacing find-by-pinyin-dired ace-pinyin pinyinlib groovy-mode indent-tools yafolding robe bundler rvm ruby-tools ruby-test-mode rubocop rspec-mode rbenv rake minitest chruby inf-ruby yaml-mode markdown-toc mmm-mode markdown-mode gh-md sunrise-x-popviewer sunrise-x-tabs sunrise-x-mirror sunrise-x-loop sunrise-x-buttons sunrise-commander ztree powershell slime-company slime common-lisp-snippets typit mmt pacmacs 2048-game sql-indent ein websocket yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode cython-mode company-anaconda anaconda-mode pythonic etags-select company-web web-completion-data company-tern dash-functional company-statistics company auto-yasnippet ac-ispell auto-complete web-mode web-beautify tern tagedit slim-mode scss-mode sass-mode pug-mode org-projectile org-present org org-pomodoro alert log4e gntp org-download mwim livid-mode skewer-mode simple-httpd less-css-mode key-chord json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc htmlize haml-mode gnuplot flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck evil-unimpaired ws-butler window-numbering which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-make helm helm-core google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump popup f s diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash async aggressive-indent adaptive-wrap ace-window ace-link avy quelpa package-build spacemacs-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

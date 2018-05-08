@@ -6,10 +6,8 @@
   (key-chord-define evil-hybrid-state-map "jj" 'evil-normal-state)
   (key-chord-mode 1))
 
-;; JavaScript layer customization
-(setq-default js2-basic-offset 4)
-(setq-default js-indent-level 4)
-(setq-default js2-bounce-indent-p t)
+;; javascript layer customization
+(require 'my_javascript)
 
 ;; org layer customization
 (require 'my_org)

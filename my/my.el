@@ -18,4 +18,8 @@
 (setq ispell-program-name "/usr/local/bin/aspell")
 (global-set-key (kbd "C-x C-<tab>") 'my/aj-toggle-fold)
 
+(setq spacemacs-default-jump-handlers
+      (remove 'evil-goto-definition spacemacs-default-jump-handlers))
+(setq omnisharp-server-executable-path "/Users/i062289/Green/omnisharp-osx/run")
+
 (provide 'my)

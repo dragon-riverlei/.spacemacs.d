@@ -31,35 +31,34 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     ruby
-     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ivy
      auto-completion
      better-defaults
+     c-c++
      common-lisp
+     csharp
+     csv
      emacs-lisp
      games
-     ;; git
+     git
+     gtags
      html
      ipython-notebook
+     ivy
      javascript
      latex
      markdown
      org
-     python
+     (python :variables python-enable-yapf-format-on-save t)
      shell
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
      spell-checking
      sql
      syntax-checking
-     ;; version-control
+     version-control
      windows-scripts
      )
    ;; List of additional packages that will be installed without being
@@ -69,10 +68,13 @@ values."
    dotspacemacs-additional-packages
    '(
      bash-completion
+     edit-server
      groovy-mode
      indent-tools
      key-chord
-     org-ref
+     ;; org-ref
+     ob-ipython
+     xref-js2
      ztree
      )
    ;; A list of packages that cannot be updated.
@@ -317,6 +319,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
         '(("melpa-cn" . "https://elpa.emacs-china.org/melpa/")
           ("org-cn"   . "https://elpa.emacs-china.org/org/")
           ("gnu-cn"   . "https://elpa.emacs-china.org/gnu/")
+          ;; ("sunrise"  . "https://elpa.emacs-china.org/sunrise-commander/")
           ))
   )
 
@@ -333,6 +336,13 @@ you should place your code here."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -340,10 +350,4 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (org2ctex org-ref pdf-tools helm-bibtex biblio parsebib biblio-core tablist winum unfill sudoku org-category-capture fuzzy emmet-mode request-deferred deferred auto-dictionary coffee-mode company-auctex auctex bash-completion xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help pangu-spacing find-by-pinyin-dired ace-pinyin pinyinlib groovy-mode indent-tools yafolding robe bundler rvm ruby-tools ruby-test-mode rubocop rspec-mode rbenv rake minitest chruby inf-ruby yaml-mode markdown-toc mmm-mode markdown-mode gh-md sunrise-x-popviewer sunrise-x-tabs sunrise-x-mirror sunrise-x-loop sunrise-x-buttons sunrise-commander ztree powershell slime-company slime common-lisp-snippets typit mmt pacmacs 2048-game sql-indent ein websocket yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode cython-mode company-anaconda anaconda-mode pythonic etags-select company-web web-completion-data company-tern dash-functional company-statistics company auto-yasnippet ac-ispell auto-complete web-mode web-beautify tern tagedit slim-mode scss-mode sass-mode pug-mode org-projectile org-present org org-pomodoro alert log4e gntp org-download mwim livid-mode skewer-mode simple-httpd less-css-mode key-chord json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc htmlize haml-mode gnuplot flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck evil-unimpaired ws-butler window-numbering which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-make helm helm-core google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump popup f s diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash async aggressive-indent adaptive-wrap ace-window ace-link avy quelpa package-build spacemacs-theme))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+    (omnisharp shut-up csharp-mode sunrise-commander edit-server csv-mode ggtags xcscope disaster company-c-headers cmake-mode clang-format org-mime smeargle orgit magit-gitflow gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter evil-magit magit magit-popup git-commit ghub let-alist with-editor diff-hl xref-js2 mmt websocket counsel swiper bind-key auctex-latexmk anaconda-mode inf-ruby auctex yasnippet smartparens evil goto-chg flycheck ivy flyspell-correct helm helm-core avy markdown-mode alert projectile org-plus-contrib hydra pythonic f js2-mode company slime ob-ipython ztree yapfify yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill typit toc-org tagedit sudoku sql-indent spaceline smex slime-company slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode powershell popwin pip-requirements persp-mode paradox pacmacs org-ref org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode minitest markdown-toc lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-hydra info+ indent-tools indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make groovy-mode google-translate golden-ratio gnuplot gh-md fuzzy flyspell-correct-ivy flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav ein dumb-jump define-word cython-mode counsel-projectile company-web company-tern company-statistics company-auctex company-anaconda common-lisp-snippets column-enforce-mode coffee-mode clean-aindent-mode chruby bundler bash-completion auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell 2048-game))))

@@ -16,6 +16,7 @@ Captured %<%Y-%m-%d %H:%M>
 
 %i
 " "Task data")
+
 (defvar my/org-project-tpl "* TODO %^{Project}
 :PROPERTIES:
 :Effort: %^{effort|1w|2w|3w|4w|5w|6w|7w|8w}
@@ -95,6 +96,44 @@ Captured %<%Y-%m-%d %H:%M>
   (lambda ()
     (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
     (setq org-format-latex-options (plist-put org-format-latex-options :foreground "SpringGreen1"))
-    (advice-add 'org-create-formula-image :around #'org-renumber-environment)))
+    (add-to-list 'org-latex-packages-alist '("" "amsmath"))
+    (add-to-list 'org-latex-packages-alist '("" "mathtools"))
+    (add-to-list 'org-latex-packages-alist '("" "tikz"))
+    (advice-add 'org-create-formula-image :around #'org-renumber-environment)
+
+    (setq org-latex-create-formula-image-program 'imagemagick)
+    (add-to-list 'org-latex-packages-alist '("" "fontspec"))
+    (setq org-format-latex-header "\\documentclass{article}           % copied from org.el
+          \\usepackage[usenames]{color}
+          \[PACKAGES]
+          \[DEFAULT-PACKAGES]
+          \\pagestyle{empty}                                          % do not remove
+          \\setromanfont{STSong}                                      % 设置中文字体 <== This is the whole change to the original configuration
+          % The settings below are copied from fullpage.sty
+          \\setlength{\\textwidth}{\\paperwidth}
+          \\addtolength{\\textwidth}{-3cm}
+          \\setlength{\\oddsidemargin}{1.5cm}
+          \\addtolength{\\oddsidemargin}{-2.54cm}
+          \\setlength{\\evensidemargin}{\\oddsidemargin}
+          \\setlength{\\textheight}{\\paperheight}
+          \\addtolength{\\textheight}{-\\headheight}
+          \\addtolength{\\textheight}{-\\headsep}
+          \\addtolength{\\textheight}{-\\footskip}
+          \\addtolength{\\textheight}{-3cm}
+          \\setlength{\\topmargin}{1.5cm}
+          \\addtolength{\\topmargin}{-2.54cm}")
+    (add-to-list 'org-preview-latex-process-alist
+      (quote (imagemagick                                             ; copied from org.el
+              :programs ("latex" "convert")
+              :description "pdf > png"
+              :message "you need to install the programs: latex and imagemagick."
+              :use-xcolor t
+              :image-input-type "pdf"
+              :image-output-type "png"
+              :image-size-adjust (1.0 . 1.0)
+              :latex-compiler
+              ("xelatex -interaction nonstopmode -output-directory %o %f")  ; This is the whole change to the original configuration.
+              :image-converter
+              ("convert -density %D -trim -antialias %f -quality 100 %O"))))))
 
 (provide 'my_org)

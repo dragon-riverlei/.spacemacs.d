@@ -47,11 +47,13 @@ values."
      games
      git
      (go :variables go-linter 'golangci-lint
+                    go-use-golangci-lint t
                     go-tab-width 2
                     go-backend 'lsp
                     godoc-at-point-function 'godoc-gogetdoc
                     gofmt-command 'goimports)
      gtags
+     ;; helm
      ipython-notebook
      ivy
      java

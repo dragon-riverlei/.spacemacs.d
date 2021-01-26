@@ -10,7 +10,8 @@
 (require 'my_javascript)
 
 ;; org layer customization
-(require 'my_org)
+(require 'my_org_agenda)
+(require 'my_org_latex)
 
 ;; my functions
 (require 'my_func)

@@ -1,11 +1,3 @@
-;; ;; Additional packages configuration
-(use-package key-chord
-  :defer t
-  :init
-  (setq key-chord-two-keys-delay 0.5)
-  (key-chord-define evil-hybrid-state-map "jj" 'evil-normal-state)
-  (key-chord-mode 1))
-
 ;; javascript layer customization
 (require 'my_javascript)
 
@@ -32,8 +24,6 @@
 (setq spacemacs-default-jump-handlers
       (remove 'evil-goto-definition spacemacs-default-jump-handlers))
 ;;(setq omnisharp-server-executable-path "/Users/i062289/Green/omnisharp-osx/run")
-
-(persistent-scratch-setup-default)
 
 (setq tramp-default-method "ssh")
 

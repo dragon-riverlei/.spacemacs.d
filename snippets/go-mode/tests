@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: t.Run
+# key: tr
+# --
+
+t.Run("$1", func(t *testing.T) {
+  got := $1
+  want := $2
+$0
+  if !reflect.DeepEqual(got, want) {
+    t.Errorf("got %v want %v", got, want)
+  }
+})
